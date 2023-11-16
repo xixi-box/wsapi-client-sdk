@@ -15,9 +15,9 @@ import static com.ws.wsapiclientsdk.utils.SignUtils.genSign;
 
 /**
  * 调用第三方接口的客户端
-
  */
 public class WsApiClient {
+    private static final String GATEWAY_HOST = "http://localhost:8090";
 
     private String accessKey;
 
@@ -32,7 +32,7 @@ public class WsApiClient {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        String result = HttpUtil.get("http://localhost:8123/api/name/", paramMap);
+        String result = HttpUtil.get(GATEWAY_HOST+"/api/name/", paramMap);
         System.out.println(result);
         return result;
     }
@@ -41,7 +41,7 @@ public class WsApiClient {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        String result = HttpUtil.post("http://localhost:8123/api/name/", paramMap);
+        String result = HttpUtil.post(GATEWAY_HOST+"/api/name/", paramMap);
         System.out.println(result);
         return result;
     }
@@ -60,7 +60,7 @@ public class WsApiClient {
 
     public String getUsernameByPost(User user) {
         String json = JSONUtil.toJsonStr(user);
-        HttpResponse httpResponse = HttpRequest.post("http://localhost:8123/api/name/user")
+        HttpResponse httpResponse = HttpRequest.post(GATEWAY_HOST+"/api/name/user")
                 .addHeaders(getHeaderMap(json))
                 .body(json)
                 .execute();
